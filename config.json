@@ -1,0 +1,16 @@
+{
+    "dbname": "imdb",
+    "vector_file": "vectors_imdb.npy",
+    "query_file": "queries_imdb.csv",
+    "model_file": "model_imdb.h5",
+    "number_of_queries": 105000,
+    "tables": ["title", "movie_info"],
+    "join_ids": [["id", "movie_id"]],
+    "columns": ["imdb_index", "kind_id", "production_year", 
+                "phonetic_code", "episode_of_id", "season_nr", 
+                "episode_nr", "info_type_id"],
+    "model_depth": 2,
+    "model_width": 512,
+    "test_size": 5000,
+    "runs": 5
+}
