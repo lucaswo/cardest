@@ -17,7 +17,7 @@ Additionally, there is a configuration file called **config.json**. It contains 
     "dbname": "imdb", # name of your db, this will be used as a suffix to name all files
     "vector_file": "vectors_imdb.npy", # file name of the vectorized query output incl. cardinalities
     "query_file": "queries_imdb.csv", # file name of the SQL queries incl. cardinalities
-    "model_file": "model.h5", # file name for model
+    "model_file": "model.h5", # file name for model, supports .h5 and .pb
     "number_of_queries": 105000, # number of queries to  be sampled
     "tables": ["title", "movie_info"], # tables of the local context...
     "join_ids": [["id", "movie_id"]], # ... and their join keys

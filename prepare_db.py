@@ -10,7 +10,7 @@ from sklearn.preprocessing import LabelEncoder
 def setup_view(cur, table_names, columns, join_atts=None):
     sql = """DROP TABLE IF EXISTS tmpview;"""
     print("Cleaning previous context...")
-    #cur.execute(sql)
+    cur.execute(sql)
     
     sql = """SELECT column_name, data_type FROM information_schema.columns 
              WHERE table_schema = 'public' AND table_name IN ('{}') 
@@ -26,7 +26,7 @@ def setup_view(cur, table_names, columns, join_atts=None):
               " AND ".join(["t{}.{} = t{}.{}".format(1, join[0], i+2, join[1]) 
                             for i,join in enumerate(join_atts)]))
         print("Setting up new context...")
-        #cur.execute(sql)
+        cur.execute(sql)
         
     #sql = """SELECT count(*) FROM tmpview;"""
     #cur.execute(sql)

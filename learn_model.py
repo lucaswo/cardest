@@ -6,10 +6,11 @@ from argparse import ArgumentParser
 
 import numpy as np
 
-from keras import backend as K
-from keras.models import Model
-from keras.layers import Dense, Input, Dropout
-from keras.optimizers import Adam
+from tensorflow import saved_model
+from tensorflow.keras import backend as K
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Dense, Input, Dropout
+from tensorflow.keras.optimizers import Adam
 
 import query_processing
 
@@ -74,7 +75,7 @@ if __name__ == '__main__':
         X_test = data[not_sample, :-1]
         y_test = denormalize_np(y[not_sample], 0, N)
 
-        model = get_model(depth=2, width=512, loss=q_loss, len_input=len(X_train[0]))
+        model = get_model(depth=config["model_depth"], width=config["model_width"], loss=q_loss, len_input=len(X_train[0]))
         start = time.time()
         model.fit(X_train, y_train, epochs=1, verbose=0, shuffle=True, batch_size=32, validation_split=0.1)
         end = time.time() - start
@@ -98,4 +99,7 @@ if __name__ == '__main__':
     with open("pred.json", "w") as output_file:
         json.dump(ypred_per_run, output_file)
 
-    best_model.save(config["model_file"])
+    if config["model_file"].endswith("h5"):
+        best_model.save(config["model_file"])
+    else:
+        saved_model.save(model, config["model_file"])

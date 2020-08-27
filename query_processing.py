@@ -20,7 +20,7 @@ def generate_queries(cur, n_queries, min_max, encoders):
 
     total_columns = len(min_max)
     vectors = np.ndarray((n_queries, total_columns*4))
-    columns = list(min_max.keys())
+    columns = list(sorted(min_max.keys()))
     while len(SQL) < n_queries:
         num_of_predictates = np.random.choice(range(1,total_columns+1))
         selected_predicates = np.random.choice(range(total_columns), size=num_of_predictates, replace=False)
@@ -90,7 +90,7 @@ def vectorize_query(query_str, min_max, encoders):
             value = encoders[pred].transform([value.replace("'", "")])[0]
         else:
             value = max(min_max[pred][0], float(value))
-        idx = list(min_max.keys()).index(pred)
+        idx = list(sorted(min_max.keys())).index(pred)
         vector[idx*4:idx*4+3] = operators[op]
         vector[idx*4+3] = (value-min_max[pred][0]+min_max[pred][2])/(min_max[pred][1]-min_max[pred][0]+min_max[pred][2])
     
@@ -130,6 +130,7 @@ if __name__ == '__main__':
         conn.set_session(autocommit=True)
         cur = conn.cursor()
 
+        print("Sampling queries...")
         start = time.time()
         queries, vectors, card = generate_queries(cur, config["number_of_queries"], minmax, encoder)
         end = time.time() - start
