@@ -102,4 +102,4 @@ if __name__ == '__main__':
     if config["model_file"].endswith("h5"):
         best_model.save(config["model_file"])
     else:
-        saved_model.save(model, config["model_file"])
+        saved_model.save(best_model, config["model_file"])

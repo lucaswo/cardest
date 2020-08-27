@@ -27,7 +27,8 @@ Additionally, there is a configuration file called **config.json**. It contains 
     "model_depth": 2, # number of layers in the neural network
     "model_width": 512, # number of neurons in the first layer (funnel architecture)
     "test_size": 5000, # number of queries in the test sets
-    "runs": 5 # number of test runs (k-fold cross-validation)
+    "runs": 5, # number of test runs (k-fold cross-validation)
+    "view_name": "tmpview" # name for the intermediate table for query sampling
 }
 ```
 

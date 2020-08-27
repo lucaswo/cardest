@@ -12,5 +12,6 @@
     "model_depth": 2,
     "model_width": 512,
     "test_size": 5000,
-    "runs": 5
+    "runs": 5,
+    "view_name": "tmpview"
 }

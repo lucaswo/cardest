@@ -16,7 +16,7 @@ def generate_queries(cur, n_queries, min_max, encoders):
     SQL0_set = set()
     SQL = []
     cardinalities = []
-    sql_body = """SELECT count(*) FROM tmpview WHERE {}"""
+    sql_body = """SELECT count(*) FROM {} WHERE {}"""
 
     total_columns = len(min_max)
     vectors = np.ndarray((n_queries, total_columns*4))
@@ -47,7 +47,7 @@ def generate_queries(cur, n_queries, min_max, encoders):
         selected_operators = ["IS" if selected_values[i] == "-1" or selected_values == -1 else x 
                               for i,x in enumerate(selected_operators)]
         
-        sql = sql_body.format(" AND ".join([" ".join([str(p), str(o), str(v) if not isinstance(v,str) or v == "-1"
+        sql = sql_body.format(config["view_name"], " AND ".join([" ".join([str(p), str(o), str(v) if not isinstance(v,str) or v == "-1"
                                                       else "'{}'".format(v)]) for p,o,v in zip(selected_predicates,
                                                                                                selected_operators, 
                                                                                                selected_values)]))

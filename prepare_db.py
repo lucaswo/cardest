@@ -8,7 +8,7 @@ import psycopg2 as postgres
 from sklearn.preprocessing import LabelEncoder
 
 def setup_view(cur, table_names, columns, join_atts=None):
-    sql = """DROP TABLE IF EXISTS tmpview;"""
+    sql = """DROP TABLE IF EXISTS {};""".format(config["view_name"])
     print("Cleaning previous context...")
     cur.execute(sql)
     
@@ -19,7 +19,7 @@ def setup_view(cur, table_names, columns, join_atts=None):
     columns_types = cur.fetchall()
     
     if len(table_names) > 1:
-        sql = """CREATE TABLE tmpview AS (SELECT {} from {} WHERE {});""".format(
+        sql = """CREATE TABLE {} AS (SELECT {} from {} WHERE {});""".format(config["view_name"],
               ",".join(["coalesce({col},'-1') AS {col}".format(col=col[0]) if "character" in col[1] 
                         else "{col}".format(col=col[0]) for col in columns_types]), 
               ",".join(["{} t{}".format(tab,i+1) for i,tab in enumerate(table_names)]),
@@ -42,7 +42,7 @@ def gather_meta(cur, columns):
     print("Gather column information...")
     for col in columns:
         if "character" in col[1]:
-            sql = """SELECT {col}, count(*) from tmpview GROUP BY {col};""".format(col=col[0])
+            sql = """SELECT {col}, count(*) from {} GROUP BY {col};""".format(config["view_name"], col=col[0])
 
             cur.execute(sql)
             tmp = cur.fetchall()
@@ -55,7 +55,7 @@ def gather_meta(cur, columns):
             encoders[col[0]] = le
             step = 1
         else:
-            sql = """SELECT min({col}), max({col}) from tmpview;""".format(col=col[0])
+            sql = """SELECT min({col}), max({col}) from {};""".format(config["view_name"], col=col[0])
             cur.execute(sql)
             cats = cur.fetchall()[0]
             if col[1] == "integer":
