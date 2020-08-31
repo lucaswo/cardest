@@ -1,7 +1,7 @@
 Cardinality Estimation with Local Deep Learning Models
 ====
 
-This repository contains the code to reproduce the local deep learning models from [1][2].
+This repository contains the code to reproduce the local deep learning models from [1][2].  
 The repository contains the following python files:
 
 * **prepare_db.py** for setting up the local context in your db and gather meta information about it.
@@ -35,7 +35,7 @@ Additionally, there is a configuration file called **config.json**. It contains 
 
 ## References
 
-[1] [Woltmann et al., Cardinality estimation with local deep learning models, aiDM 2019](https://dl.acm.org/citation.cfm?id=3329875)
+[1] [Woltmann et al., Cardinality estimation with local deep learning models, aiDM 2019](https://dl.acm.org/citation.cfm?id=3329875)  
 [2] [Woltmann et al., Machine Learning-based Cardinality Estimation in DBMS on Pre-Aggregated Data, arXiv 2020](https://arxiv.org/abs/2005.09367)
 
 ## Cite
