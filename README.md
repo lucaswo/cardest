@@ -35,7 +35,7 @@ Additionally, there is a configuration file called **config.json**. It contains 
 
 ## References
 
-[1] [Woltmann et al., Cardinality estimation with local deep learning models, aiDM 2019](https://dl.acm.org/citation.cfm?id=3329875)  
+[1] [Woltmann et al., Cardinality estimation with local deep learning models, aiDM@SIGMOD 2019](https://dl.acm.org/citation.cfm?id=3329875)  
 [2] [Woltmann et al., Machine Learning-based Cardinality Estimation in DBMS on Pre-Aggregated Data, arXiv 2020](https://arxiv.org/abs/2005.09367)
 
 ## Cite
@@ -46,7 +46,7 @@ Please cite our papers if you use this code in your own work:
   title = {Cardinality estimation with local deep learning models},
   author = {Woltmann, Lucas and Hartmann, Claudio and Thiele, Maik and Habich, Dirk and Lehner, Wolfgang},
   booktitle = {Proceedings of the Second International Workshop on Exploiting Artificial Intelligence Techniques for Data Management},
-  series = {aiDM '19},
+  series = {aiDM@SIGMOD '19},
   year = {2019}
 }
 
