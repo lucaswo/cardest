@@ -11,16 +11,19 @@ import numpy as np
 
 import pandas as pd
 
-def generate_queries(cur, n_queries, min_max, encoders):
+def generate_queries(cur, n_queries, min_max, encoders, cube=False):
     SQL_set = set()
     SQL0_set = set()
     SQL = []
     cardinalities = []
     sql_body = """SELECT count(*) FROM {} WHERE {}"""
+    if cube:
+        sql_body_cube = """SELECT COALESCE(SUM(count), 0) FROM {}_cube WHERE {}"""
 
     total_columns = len(min_max)
     vectors = np.ndarray((n_queries, total_columns*4))
     columns = list(sorted(min_max.keys()))
+    count = 0
     while len(SQL) < n_queries:
         num_of_predictates = np.random.choice(range(1,total_columns+1))
         selected_predicates = np.random.choice(range(total_columns), size=num_of_predictates, replace=False)
@@ -39,18 +42,25 @@ def generate_queries(cur, n_queries, min_max, encoders):
         #[[0,0,1], [0,1,0], [1,0,0], [1,0,1], [0,1,1], [1,1,0]]
         # <>=
         #selected_operators = np.random.choice(["=", ">", "<", "<=", ">=", "!="], size=num_of_predictates)
-        selected_operators = np.random.choice(["=", ">", "<"], size=num_of_predictates)
+        selected_operators = np.random.choice(["=", ">", "<", "<=", ">=", "!="], size=num_of_predictates)
         #selected_operators = ["=" if "id" not in sp else np.random.choice(["=", ">", "<", "<=", ">=", "!="]) 
         #                      for sp in selected_predicates]
         #selected_operators = [np.random.choice(["IS", "IS NOT"]) if selected_values[i] == "-1" 
         #                      or selected_values == -1 else x for i,x in enumerate(selected_operators)]
-        selected_operators = ["IS" if selected_values[i] == "-1" or selected_values == -1 else x 
+        selected_operators = ["IS" if selected_values[i] == "-1" or selected_values[i] == -1 else x 
                               for i,x in enumerate(selected_operators)]
         
-        sql = sql_body.format(config["view_name"], " AND ".join([" ".join([str(p), str(o), str(v) if not isinstance(v,str) or v == "-1"
+        if cube:
+            sql = sql_body_cube.format(config["view_name"], " AND ".join([" ".join([str(p), str(o), str(v) if not isinstance(v,str) or v == "-1"
                                                       else "'{}'".format(v)]) for p,o,v in zip(selected_predicates,
                                                                                                selected_operators, 
                                                                                                selected_values)]))
+        else:
+            sql = sql_body.format(config["view_name"], " AND ".join([" ".join([str(p), str(o), str(v) if not isinstance(v,str) or v == "-1"
+                                                      else "'{}'".format(v)]) for p,o,v in zip(selected_predicates,
+                                                                                               selected_operators, 
+                                                                                               selected_values)]))
+
         check_len = len(SQL_set)
         sql = sql.replace("-1", "NULL")
         SQL_set.add(sql)
@@ -65,6 +75,10 @@ def generate_queries(cur, n_queries, min_max, encoders):
             else:
                 SQL0_set.add(sql)
                 SQL_set.remove(sql)
+
+        count += 1
+
+    print("Had to generate {} queries.".format(count))
 
     return SQL, vectors, cardinalities
 
@@ -132,7 +146,7 @@ if __name__ == '__main__':
 
         print("Sampling queries...")
         start = time.time()
-        queries, vectors, card = generate_queries(cur, config["number_of_queries"], minmax, encoder)
+        queries, vectors, card = generate_queries(cur, config["number_of_queries"], minmax, encoder, config["optim"])
         end = time.time() - start
 
         print("Sampled {} queries in {:.2f}s.".format(len(queries), end))

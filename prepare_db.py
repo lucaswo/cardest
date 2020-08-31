@@ -7,8 +7,8 @@ import psycopg2 as postgres
 
 from sklearn.preprocessing import LabelEncoder
 
-def setup_view(cur, table_names, columns, join_atts=None):
-    sql = """DROP TABLE IF EXISTS {};""".format(config["view_name"])
+def setup_view(cur, table_names, columns, join_atts=None, cube=False):
+    sql = """DROP TABLE IF EXISTS {}; DROP TABLE IF EXISTS {}_cube;""".format(config["view_name"], config["view_name"])
     print("Cleaning previous context...")
     cur.execute(sql)
     
@@ -27,6 +27,13 @@ def setup_view(cur, table_names, columns, join_atts=None):
                             for i,join in enumerate(join_atts)]))
         print("Setting up new context...")
         cur.execute(sql)
+
+        if cube:
+            sql = """CREATE TABLE {}_cube AS (SELECT {col}, count(*)::integer FROM tmpview 
+            GROUP BY GROUPING SETS(({col})));""".format(config["view_name"], col=",".join(columns))
+            print("Setting up optmized data structure...")
+            cur.execute(sql)
+
         
     #sql = """SELECT count(*) FROM tmpview;"""
     #cur.execute(sql)
@@ -76,7 +83,7 @@ if __name__ == '__main__':
     conn.set_session(autocommit=True)
     cur = conn.cursor()
 
-    cols = setup_view(cur, config["tables"], config["columns"], config["join_ids"])
+    cols = setup_view(cur, config["tables"], config["columns"], config["join_ids"], cube=config["optim"])
 
     minmax, encoder = gather_meta(cur, cols)
 
