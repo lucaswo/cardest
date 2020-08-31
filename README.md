@@ -1,7 +1,7 @@
 Cardinality Estimation with Local Deep Learning Models
 ====
 
-This repository contains the code to reproduce the local deep learning models from [1].
+This repository contains the code to reproduce the local deep learning models from [1][2].
 The repository contains the following python files:
 
 * **prepare_db.py** for setting up the local context in your db and gather meta information about it.
@@ -28,17 +28,19 @@ Additionally, there is a configuration file called **config.json**. It contains 
     "model_width": 512, # number of neurons in the first layer (funnel architecture)
     "test_size": 5000, # number of queries in the test sets
     "runs": 5, # number of test runs (k-fold cross-validation)
-    "view_name": "tmpview" # name for the intermediate table for query sampling
+    "view_name": "tmpview", # name for the intermediate table for query sampling
+    "optim": 1 # whether the optimization from [2] should be used
 }
 ```
 
 ## References
 
 [1] [Woltmann et al., Cardinality estimation with local deep learning models, aiDM 2019](https://dl.acm.org/citation.cfm?id=3329875)
+[2] [Woltmann et al., Machine Learning-based Cardinality Estimation in DBMS on Pre-Aggregated Data, arXiv 2020](https://arxiv.org/abs/2005.09367)
 
 ## Cite
 
-Please cite our paper if you use this code in your own work:
+Please cite our papers if you use this code in your own work:
 ```
 @article{woltmann2019localdeep,
   title = {Cardinality estimation with local deep learning models},
@@ -46,5 +48,12 @@ Please cite our paper if you use this code in your own work:
   booktitle = {Proceedings of the Second International Workshop on Exploiting Artificial Intelligence Techniques for Data Management},
   series = {aiDM '19},
   year = {2019}
+}
+
+@article{woltmann2020cube,
+  title={Machine Learning-based Cardinality Estimation in DBMS on Pre-Aggregated Data},
+  author={Woltmann, Lucas and Hartmann, Claudio and Habich, Dirk and Lehner, Wolfgang},
+  journal={arXiv preprint arXiv:2005.09367},
+  year={2020}
 }
 ```
