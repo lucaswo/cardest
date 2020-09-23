@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
         model = get_model(depth=config["model_depth"], width=config["model_width"], loss=q_loss, len_input=len(X_train[0]))
         start = time.time()
-        model.fit(X_train, y_train, epochs=1, verbose=0, shuffle=True, batch_size=32, validation_split=0.1)
+        model.fit(X_train, y_train, epochs=100, verbose=0, shuffle=True, batch_size=32, validation_split=0.1)
         end = time.time() - start
         times_per_run.append(end)
         
