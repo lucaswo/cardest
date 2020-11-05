@@ -29,8 +29,8 @@ def setup_view(cur, table_names, columns, join_atts=None, cube=False):
         cur.execute(sql)
 
         if cube:
-            sql = """CREATE TABLE {}_cube AS (SELECT {col}, count(*)::integer FROM tmpview 
-            GROUP BY GROUPING SETS(({col})));""".format(config["view_name"], col=",".join(columns))
+            sql = """CREATE TABLE {tab}_cube AS (SELECT {col}, count(*)::integer FROM {tab} 
+            GROUP BY GROUPING SETS(({col})));""".format(tab=config["view_name"], col=",".join(columns))
             print("Setting up optmized data structure...")
             cur.execute(sql)
 
