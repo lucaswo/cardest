@@ -56,4 +56,14 @@ Please cite our papers if you use this code in your own work:
   journal={arXiv preprint arXiv:2005.09367},
   year={2020}
 }
+
+@article{woltmann2021aggregate,
+  title={Aggregate-based Training Phase for ML-based Cardinality Estimation},
+  author={Woltmann, Lucas and Hartmann, Claudio and Habich, Dirk and Lehner, Wolfgang},
+  journal={BTW 2021},
+  year={2021},
+  publisher={Gesellschaft f{\"u}r Informatik, Bonn},
+  pages = {135-154},
+  doi = {10.18420/btw2021-07}
+}
 ```
