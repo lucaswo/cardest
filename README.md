@@ -36,8 +36,7 @@ Additionally, there is a configuration file called **config.json**. It contains 
 ## References
 
 [1] [Woltmann et al., Cardinality estimation with local deep learning models, aiDM@SIGMOD 2019](https://dl.acm.org/citation.cfm?id=3329875)  
-[2] [Woltmann et al., Aggregate-based Training Phase for ML-based Cardinality Estimation, BTW 2021](https://dl.gi.de/handle/20.500.12116/35812)  
-[3] [Woltmann et al., Machine Learning-based Cardinality Estimation in DBMS on Pre-Aggregated Data, arXiv 2020](https://arxiv.org/abs/2005.09367)
+[2] [Woltmann et al., Aggregate-based Training Phase for ML-based Cardinality Estimation, Datenbank-Spektrum 2022](https://link.springer.com/article/10.1007/s13222-021-00400-z)
 
 ## Cite
 
@@ -51,20 +50,12 @@ Please cite our papers if you use this code in your own work:
   year = {2019}
 }
 
-@article{woltmann2021aggregate,
-  title={Aggregate-based Training Phase for ML-based Cardinality Estimation},
+@article{woltmann2022aggregate,
+  title={Aggregate-based training phase for ML-based cardinality estimation},
   author={Woltmann, Lucas and Hartmann, Claudio and Habich, Dirk and Lehner, Wolfgang},
-  journal={BTW 2021},
-  year={2021},
-  publisher={Gesellschaft f{\"u}r Informatik, Bonn},
-  pages = {135-154},
-  doi = {10.18420/btw2021-07}
-}
-
-@article{woltmann2020cube,
-  title={Machine Learning-based Cardinality Estimation in DBMS on Pre-Aggregated Data},
-  author={Woltmann, Lucas and Hartmann, Claudio and Habich, Dirk and Lehner, Wolfgang},
-  journal={arXiv preprint arXiv:2005.09367},
-  year={2020}
+  journal={Datenbank-Spektrum},
+  pages={1--13},
+  year={2022},
+  publisher={Springer}
 }
 ```
